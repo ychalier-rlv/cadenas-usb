@@ -1,0 +1,2 @@
+ACTION=="add" \
+, RUN+="/home/pi/udev.sh"
