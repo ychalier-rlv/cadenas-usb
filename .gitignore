@@ -1,3 +1,4 @@
-*.svg
-*.stl
-*.gcode
+stl-old/
+déco/
+photos/
+*.db

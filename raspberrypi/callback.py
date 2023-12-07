@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import os
 import random
 import re
@@ -89,21 +91,36 @@ print("Mounting", part, flush=True)
 exec("sudo", "mount", f"/dev/{part}", MOUNT_FOLDER)
 files = next(os.walk(MOUNT_FOLDER))[2]
 
-keyfiles = [
-    "batterie.jpg",               #0
-    "clavier.jpg",                #1
-    "disque dur.jpg",             #2
-    "lecteur CD.jpg",             #3
-    "mémoire vive.jpg",           #4
-    "processeur.jpg",             #5
-    "souris.jpg",                 #6
-    "système de ventilation.jpg", #7
-]
+# print("Files:", files)
+
+spellings = {
+    0: ["batterie"],
+    1: ["clavier"],
+    2: ["disque dur"],
+    3: ["lecteur cd"],
+    4: ["m�moire vive", "m?emoire vive", "memoire vive"],
+    5: ["processeur"],
+    6: ["souris"],
+    
+}
+
+keyfiles = {
+    "batterie.jpg": 0,
+    "clavier.jpg": 1,
+    "disque dur.jpg": 2,
+    "lecteur CD.jpg": 3,
+    "mémoire vive.jpg": 4,
+    "m?moire vive.jpg": 4,
+    "processeur.jpg": 5,
+    "souris.jpg": 6,
+    "système de ventilation.jpg": 7,
+    "syst?me de ventilation.jpg": 7,
+}
 
 for path in files:
     basename = os.path.basename(path)
     if basename in keyfiles:
-        file_index = keyfiles.index(basename)
+        file_index = keyfiles[basename]
         tosend.append(msgs[file_index])
     elif basename.endswith(".txt"):
         with open(os.path.join(MOUNT_FOLDER, path), "r", encoding="utf8") as file:
